@@ -243,8 +243,8 @@ header **Authorization**
 
 Currently the Open edX Platform includes the following APIs.
 - Course Catalog API
-- Enrollment API
-- User API
+- Enrollment API(Documentation is not accessible)
+- User API(Documentation is not accessible)
 - Data Analytics API
 
 ### 4.1 Course Catalog API
@@ -424,15 +424,15 @@ Response:
 Enrollment API used to view user and course enrollment information
 and to enroll a user in a course.
 
-Documentation is not accesable.
+Documentation is not accessible.
 
 ### 4.3 User API
 User API used to view and update user account and preferences
 information.
 
-Documentation is not accesable.
+Documentation is not accessible.
 
 ### 4.4 Data Analytics API
 Data Analytics API used to view and analyze student activity in your course.
 
-Documentation is not accesable.
+http://edx.readthedocs.io/projects/edx-data-analytics-api/en/latest/index.html
