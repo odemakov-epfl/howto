@@ -1,4 +1,4 @@
-# Quick how-to run edX Devstack, XBlocks, LTI
+# Quick how-to run edX Devstack, XBlocks, LTI, Open edX API
 
 This is quick guide to install
 - [Open edX Devstack](http://edx.readthedocs.io/projects/edx-installing-configuring-and-running/en/latest/installation/devstack/install_devstack.html)
@@ -205,11 +205,13 @@ Forward port 5000 from guest to host(Vagrantfile).
   list. These key and secret are hard coded in LTI provider.
 - Set to True **Request user's username** value. As provider will use
   user name in the greeting.
+- Set **Scored** to True.
 - Set **Weight** value to 10. As provider has 5 questions 2 points each.
 - Click the "Save changes" button.
 - Add "LTI" item from the advanced list to the unit you want to be LTI'ed.
 - Set **LTI ID** as you provided in settings("lti_starx_add_demo")
 - Set **LTI URL** to http://0.0.0.0:5000
+- Set **Open in New Page** to False.
 - Click the "Save" button.
 
 ### 3.7 Check out LTI in LMS
@@ -218,3 +220,219 @@ Forward port 5000 from guest to host(Vagrantfile).
 - Set grade to 1
 - Update templates
 - Suggestions?
+
+## 4. Open edX API
+Open edX includes a suite of APIs that allow you to build applications
+that interact with the edX platform.
+
+Open edX APIs use Representational State Transfer (**ReST**) design
+principles and support JavaScript Object Notation (**JSON**)
+data-interchange format.
+
+APIs use **OAuth 2.0** for authentication. OAuth 2.0 is an open standard
+used by many systems that require secure user authentication. See the
+OAuth 2.0 Standard for more information.
+
+The standard procedure to start communication with APIs is to get
+access token first by sending POST request with **ClientID** and
+**ClientSecret** to /oauth2/v1/access_token url. Response will be in JSON
+format and will contain **AccessToken** and **Expiration** time or error if
+any. Then client'll be able to send other requests to APIs with HTTP
+header **Authorization**
+
+
+Currently the Open edX Platform includes the following APIs.
+- Course Catalog API
+- Enrollment API
+- User API
+- Data Analytics API
+
+### 4.1 Course Catalog API
+Course Catalog API used to get list of all the course catalogs,
+information about a specific catalog and list of all courses in a
+catalog.
+
+#### 4.1.1 Get a List of All Course Catalogs:
+
+Request: `GET /catalog/v1/catalogs/`
+
+Response:
+```
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 1,
+            "name": "All Courses",
+            "query": "*:*",
+            "courses_count": 18,
+            "viewers": [
+                "username1", "username2"
+            ]
+        }
+    ]
+}
+```
+
+#### 4.1.2 Get Information about a Specific Catalog
+
+Request: `GET /catalog/v1/catalogs/{id}/`
+
+Response:
+```
+{
+    "id": 1,
+    "name": "All Courses",
+    "query": "*:*",
+    "courses_count": 18,
+    "viewers": [
+        "username1", "username2"
+            ]
+}
+```
+
+#### 4.1.3 Get a List of All Courses in a Catalog
+
+Request: `GET /catalog/v1/catalogs/{id}/courses/`
+
+Response:
+```
+{
+   "count":123,
+   "next":"https://api.edx.org/catalog/v1/catalogs/1/courses/?limit=20&offset=40",
+   "previous":"https://api.edx.org/catalog/v1/catalogs/1/courses/?limit=20&offset=0",
+   "results":[
+      {
+         "key":"example_course_key",
+         "title":"Title of the Course",
+         "short_description":"Short description of course content",
+         "full_description":"Longer, more detailed description of course content.",
+         "level_type":"Introductory",
+         "subjects":[
+            {
+               "name":"Name of subject"
+            }
+         ],
+         "prerequisites":[
+
+         ],
+         "expected_learning_items":[
+
+         ],
+         "image":[
+            {
+               "src":"https://example.com/directory/course_image.jpg",
+               "description":"Example image for the Example Title course",
+               "height":"300",
+               "width":"400"
+            }
+         ],
+         "video":[
+            {
+               "src":"http://www.youtube.com/watch?v=abcdefghijk",
+               "description":null,
+               "image":null
+            }
+         ],
+         "owners":[
+            {
+               "key":"example_institution_key",
+               "name":"Example Institution",
+               "description":null,
+               "logo_image":[
+                  {
+                     "src":"https://example.com/directory/institution_logo.jpg",
+                     "description":null,
+                     "height":"200",
+                     "width":"200"
+                  }
+               ],
+               "homepage_url":null
+            }
+         ],
+         "sponsors":[
+
+         ],
+         "modified":"YYYY-MM-DDTHH:MM:SS.SSSSSSZ",
+         "course_runs":[
+            {
+               "course":"course_number",
+               "key":"example_course_key",
+               "title":"Title of the Course",
+               "short_description":"Short description of course content",
+               "full_description":"Longer, more detailed description of course content",
+               "start":"YYYY-MM-DDTHH:MM:SSZ",
+               "end":"YYYY-MM-DDTHH:MM:SSZ",
+               "enrollment_start":"YYYY-MM-DDTHH:MM:SSZ",
+               "enrollment_end":"YYYY-MM-DDTHH:MM:SSZ",
+               "announcement":null,
+               "image":[
+                  {
+                     "src":"https://example.com/directory/course_image.jpg",
+                     "description":null,
+                     "height":"200",
+                     "width":"300"
+                  }
+               ],
+               "video":null,
+               "seats":[
+                  {
+                     "type":"credit",
+                     "price":"100.00",
+                     "currency":"USD",
+                     "upgrade_deadline":"YYYY-MM-DDTHH:MM:SSZ",
+                     "credit_provider":"example institution",
+                     "credit_hours":3
+                  }
+               ],
+               "content_language":null,
+               "transcript_languages":[
+
+               ],
+               "instructors":[
+
+               ],
+               "staff":[
+                  {
+                     "key":"staff_key",
+                     "name":"Staff Member Name",
+                     "title":"Staff Member Title",
+                     "bio":"Example staff member bio.",
+                     "profile_image":{
+                        "src":"https://example.com/image/staff_member_name.png",
+                        "description":null,
+                        "height":"150",
+                        "width":"150"
+                     }
+                  }
+               ],
+               "pacing_type":"instructor_paced",
+               "min_effort":null,
+               "max_effort":null,
+               "modified":"YYYY-MM-DDTHH:MM:SSZ"
+            }
+         ],
+         "marketing_url":"https://example.org/url_for_marketing_materials"
+      }
+   ]
+}
+```
+
+### 4.2 Enrollment API
+Enrollment API used to view user and course enrollment information
+and to enroll a user in a course.
+
+Documentation is not accesable.
+
+### 4.3 User API
+User API used to view and update user account and preferences
+information.
+
+Documentation is not accesable.
+
+### 4.4 Data Analytics API
+Data Analytics API used to view and analyze student activity in your course.
+
+Documentation is not accesable.
