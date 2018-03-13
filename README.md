@@ -60,6 +60,7 @@ export OPENEDX_RELEASE="open-release/ginkgo.2"
 ### 1.6 Download the install script.
 ```
 curl -OL https://raw.github.com/edx/configuration/$OPENEDX_RELEASE/util/install/install_stack.sh
+https://raw.github.com/edx/configuration/open-release/ginkgo.2/util/install/install_stack.sh
 ```
 
 ### 1.7 Run the install script to create and start the devstack virtual machine.
