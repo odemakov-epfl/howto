@@ -197,6 +197,9 @@ flask run --host=0.0.0.0
 Forward port 5000 from guest to host(Vagrantfile).
 
 ### 3.6 Set up LTI consumer
+
+#### 3.6.1 Set up course advanced Settings
+
 - From the main page of a specific course, navigate to Settings ->
   Advanced Settings from the top menu.
 - Check for the **advanced_modules** policy key, and add "lti" to the
@@ -204,16 +207,18 @@ Forward port 5000 from guest to host(Vagrantfile).
 - Add to the **LTI Passports**
   "lti_starx_add_demo:\_\_consumer_key\_\_:\_\_lti_secret\_\_" to the value
   list. These key and secret are hard coded in LTI provider.
+
+#### Set up LTI unit
+- Add "LTI" item from the advanced list to the unit you want to be LTI'ed.
+- Set **LTI ID** as you provided in settings("lti_starx_add_demo")
+- Set **LTI URL** to http://0.0.0.0:5000
+- Set **Open in New Page** to False.
 - Set to True **Request user's username** value. As provider will use
   user name in the greeting.
 - Set **Scored** to True.
 - Set **Weight** value to 10. As provider has 5 questions 2 points each.
 - Click the "Save changes" button.
-- Add "LTI" item from the advanced list to the unit you want to be LTI'ed.
-- Set **LTI ID** as you provided in settings("lti_starx_add_demo")
-- Set **LTI URL** to http://0.0.0.0:5000
-- Set **Open in New Page** to False.
-- Click the "Save" button.
+- Click the "Publish" button.
 
 ### 3.7 Check out LTI in LMS
 
