@@ -208,7 +208,7 @@ Forward port 5000 from guest to host(Vagrantfile).
   "lti_starx_add_demo:\_\_consumer_key\_\_:\_\_lti_secret\_\_" to the value
   list. These key and secret are hard coded in LTI provider.
 
-#### Set up LTI unit
+#### 3.6.2 Set up LTI unit
 - Add "LTI" item from the advanced list to the unit you want to be LTI'ed.
 - Set **LTI ID** as you provided in settings("lti_starx_add_demo")
 - Set **LTI URL** to http://0.0.0.0:5000
